@@ -1,7 +1,5 @@
 package moon;
 
-import java.util.Date;
-
 public class MoonDirectionSearchResult {
 	private long time;
 	private SphericalCoordinates target;
@@ -31,6 +29,9 @@ public class MoonDirectionSearchResult {
 
 	@Override
 	public String toString() {
-		return "["+(new Date(time)).toString() +" : " + "(" + direction.getAzimuth() +","+ direction.getElevation()+") " + (target==null?"":(": Error="+getErrorAngle())) +"]";
+		return time +
+	        ","+direction.getAzimuth() +
+			","+direction.getElevation() +
+			(target==null?"":(","+getErrorAngle()));
 	}
 }

@@ -1,7 +1,5 @@
 package moon;
 
-import java.util.Date;
-
 public class MoonShadowSearchResult {
 	private long time;
 	private EarthPosition3D target;
@@ -26,6 +24,8 @@ public class MoonShadowSearchResult {
 	
 	@Override
 	public String toString() {
-		return "["+(new Date(time)).toString() +" : " + "(" + actual.getLatitude() +","+ actual.getLongitude()+")]";
+		return time +
+		        ","+actual.getLatitude() +
+				","+actual.getLongitude();
 	}
 }
