@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.SimpleTimeZone;
 
+import coordinates.SphericalCoordinates;
+
 import static moon.MathUtils.*;
 
 public class MoonPositionCalculationEngine {

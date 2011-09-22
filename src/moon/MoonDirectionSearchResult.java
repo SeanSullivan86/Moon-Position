@@ -1,5 +1,7 @@
 package moon;
 
+import coordinates.SphericalCoordinates;
+
 public class MoonDirectionSearchResult {
 	private long time;
 	private SphericalCoordinates target;

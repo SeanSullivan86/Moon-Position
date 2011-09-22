@@ -4,6 +4,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import coordinates.EarthPosition3D;
+import coordinates.SphericalCoordinates;
+
+
 public class MoonPositionOptimizer {
 	
 	private int timeZone;

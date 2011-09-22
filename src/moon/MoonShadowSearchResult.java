@@ -1,5 +1,7 @@
 package moon;
 
+import coordinates.EarthPosition3D;
+
 public class MoonShadowSearchResult {
 	private long time;
 	private EarthPosition3D target;

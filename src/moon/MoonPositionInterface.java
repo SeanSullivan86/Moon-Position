@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import terrain.TerrainCalculator;
+
+import coordinates.EarthPosition2D;
+import coordinates.EarthPosition3D;
+import coordinates.SphericalCoordinates;
+import elevation.ElevationService;
+
+
 /* This class provides functions which return information about the position 
  * of the moon in the sky when viewed from a specified location at a 
  * specified time.
@@ -142,10 +150,15 @@ public class MoonPositionInterface {
 	public List<MoonShadowSearchResult> getMoonShadowPositionsForNight(String searchDate, EarthPosition3D objective, int intervalMinutes) {
 		List<MoonDirectionSearchResult> directionResults = getMoonDirectionsForNight(searchDate, objective, intervalMinutes);
 		List<MoonShadowSearchResult> shadowResults = new ArrayList<MoonShadowSearchResult>();
+		TerrainCalculator terrainCalculator = new TerrainCalculator();
 		for (MoonDirectionSearchResult directionResult : directionResults) {
-			EarthPosition3D shadowPosition = getShadowPosition(objective,directionResult.getDirection());
-			if (shadowPosition != null) {
-			    shadowResults.add(new MoonShadowSearchResult(directionResult.getTime(),shadowPosition));
+			if (directionResult.getDirection().getElevation() > 0) {
+			    EarthPosition2D pos = terrainCalculator.getLineIntersectionWithGround(objective, directionResult.getDirection().reverseDirection());
+			
+			    //EarthPosition3D shadowPosition = getShadowPosition(objective,directionResult.getDirection());
+			    if (pos != null) {
+			    	shadowResults.add(new MoonShadowSearchResult(directionResult.getTime(),new EarthPosition3D(pos)));
+			    }
 			}
 		}
 		return shadowResults;
@@ -257,6 +270,7 @@ public class MoonPositionInterface {
 	}
 	
 	public static void main(String[] args) {
+		ElevationService.initialize();
 		
 		MoonPositionInterface moonPosition = new MoonPositionInterface(-7);
 		
@@ -283,6 +297,9 @@ public class MoonPositionInterface {
 		for (MoonDirectionSearchResult result : results3) {
 			System.out.println(result.toString());
 		}
+		
+		System.out.println("Moon shadow positions for night of 2011-09-07: ");
+		List<MoonShadowSearchResult> results5 = moonPosition.getMoonShadowPositionsForNight("2011-09-07", spaceNeedle,60);
 		
 		System.out.println("Moon direction for 2011-09-07 20:00:00 : ");
 		MoonDirectionSearchResult result4 = moonPosition.getMoonDirection("2011-09-07 20:00:00", sean );
